@@ -1,0 +1,31 @@
+{
+  "name": "dotenv-shell",
+  "version": "0.0.1",
+  "description": "A dotenv package that expands shell commands",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miguel-a-calles-mba/dotenv-shell.git"
+  },
+  "keywords": [
+    "dotenv",
+    "shell",
+    "expand",
+    "variable",
+    "variables"
+  ],
+  "author": "Miguel A. Calles, MBA <miguelacallesmba@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/miguel-a-calles-mba/dotenv-shell/issues"
+  },
+  "homepage": "https://github.com/miguel-a-calles-mba/dotenv-shell#readme",
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "dotenv-expand": "^5.1.0",
+    "jest": "^26.0.1"
+  }
+}
