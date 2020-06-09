@@ -4,7 +4,9 @@
   "description": "A dotenv package that expands shell commands",
   "main": "index.js",
   "scripts": {
-    "test": "jest test.js"
+    "test": "jest .",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix ."
   },
   "repository": {
     "type": "git",
@@ -26,6 +28,8 @@
   "devDependencies": {
     "dotenv": "^8.2.0",
     "dotenv-expand": "^5.1.0",
+    "eslint": "^7.2.0",
+    "eslint-config-google": "^0.14.0",
     "jest": "^26.0.1"
   }
 }

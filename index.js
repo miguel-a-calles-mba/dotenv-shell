@@ -30,7 +30,7 @@ const shellExpand = (parsedConfig) => {
                 unsafeCmds.forEach((unsafeCmd) => {
                     if (unsafeCmd.test(cmd)) {
                         throw new Error(
-                            `${key}=${val} uses unsafe Linux command`
+                            `${key}=${val} uses unsafe Linux command`,
                         );
                     }
                 });

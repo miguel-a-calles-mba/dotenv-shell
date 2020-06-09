@@ -25,7 +25,7 @@ describe('shell expansion', () => {
         const cmd = '$(rm .)';
         const config = { UNSAFE: cmd };
         expect(() => dotenvShell(config)).toThrowError(
-            new Error(`UNSAFE=${cmd} uses unsafe Linux command`)
+            new Error(`UNSAFE=${cmd} uses unsafe Linux command`),
         );
     });
     test('dotenv-expand from file', () => {
