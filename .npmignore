@@ -1,3 +1,4 @@
 .gitignore
-.eslintrc
+.github
+.eslintrc.js
 .jsbeautifyrc
