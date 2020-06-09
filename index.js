@@ -1,6 +1,6 @@
 'use strict';
 
-const childProcess = require('child_process');
+const { execSync } = require('child_process');
 
 const shellCmdPatterns = [/^\$\((.*)\)$/, /^`(.*)`$/];
 const unsafeCmds = [
@@ -35,7 +35,7 @@ const shellExpand = (parsedConfig) => {
                     }
                 });
                 try {
-                    const newVal = childProcess.execSync(cmd).toString().trim();
+                    const newVal = execSync(cmd).toString().trim();
                     parsedConfig[key] = newVal;
                 } catch (e) {
                     throw new Error(`Error for ${key}=${val}: ${e.message}`);
