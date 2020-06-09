@@ -29,7 +29,7 @@ describe('shell expansion', () => {
         );
     });
     test('dotenv-expand from file', () => {
-        const config = dotenv.config();
+        const config = dotenv.config({ path: '.env.test' });
         dotenvExpand(config);
         dotenvShell(config);
         expect(config).toEqual({ parsed: { EXPAND: 'basic', BASIC: 'basic' } });

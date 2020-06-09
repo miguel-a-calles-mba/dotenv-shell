@@ -1,6 +1,6 @@
 {
   "name": "dotenv-shell",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A dotenv package that expands shell commands",
   "main": "index.js",
   "scripts": {
