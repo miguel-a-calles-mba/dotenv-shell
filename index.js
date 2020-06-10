@@ -17,9 +17,11 @@ const unsafeCmds = [
 module.exports = (dotenvConfig) => {
     if (dotenvConfig.parsed) {
         shellExpand(dotenvConfig.parsed);
+        updateEnv(dotenvConfig.parsed);
     } else {
         shellExpand(dotenvConfig);
     }
+    return dotenvConfig;
 };
 
 const shellExpand = (parsedConfig) => {
@@ -43,4 +45,10 @@ const shellExpand = (parsedConfig) => {
             }
         });
     });
+};
+
+const updateEnv = (parsedConfig) => {
+    Object.entries(parsedConfig).forEach(
+        ([key, val]) => (process.env[key] = val),
+    );
 };

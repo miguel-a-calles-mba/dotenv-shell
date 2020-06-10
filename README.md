@@ -45,14 +45,12 @@ BASIC=`echo ${EXPAND}`
 ```
 
 ```js
-const config = dotenv.config();
-dotenvExpand(config);
-dotenvShell(config);
+const config = dotenvShell(dotenvExpand(dotenv.config()));
 console.log(config);
 // { parsed: { EXPAND: 'basic', BASIC: 'basic' } }
 ```
 
-### Notes
+## Notes
 
 Please request features or report problems using the [issues](https://github.com/miguel-a-calles-mba/dotenv-shell/issues) page.
 
