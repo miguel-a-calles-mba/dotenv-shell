@@ -2,4 +2,5 @@
 .github
 .eslintrc.js
 .jsbeautifyrc
+.env.test
 test.js
