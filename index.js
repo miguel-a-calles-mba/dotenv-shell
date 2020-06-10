@@ -1,6 +1,6 @@
 'use strict';
 
-const childProcess = require('child_process');
+const { execSync } = require('child_process');
 
 const shellCmdPatterns = [/^\$\((.*)\)$/, /^`(.*)`$/];
 const unsafeCmds = [
@@ -17,9 +17,11 @@ const unsafeCmds = [
 module.exports = (dotenvConfig) => {
     if (dotenvConfig.parsed) {
         shellExpand(dotenvConfig.parsed);
+        updateEnv(dotenvConfig.parsed);
     } else {
         shellExpand(dotenvConfig);
     }
+    return dotenvConfig;
 };
 
 const shellExpand = (parsedConfig) => {
@@ -35,7 +37,7 @@ const shellExpand = (parsedConfig) => {
                     }
                 });
                 try {
-                    const newVal = childProcess.execSync(cmd).toString().trim();
+                    const newVal = execSync(cmd).toString().trim();
                     parsedConfig[key] = newVal;
                 } catch (e) {
                     throw new Error(`Error for ${key}=${val}: ${e.message}`);
@@ -43,4 +45,10 @@ const shellExpand = (parsedConfig) => {
             }
         });
     });
+};
+
+const updateEnv = (parsedConfig) => {
+    Object.entries(parsedConfig).forEach(
+        ([key, val]) => (process.env[key] = val),
+    );
 };

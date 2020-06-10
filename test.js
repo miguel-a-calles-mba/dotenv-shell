@@ -5,33 +5,47 @@ const dotenvExpand = require('dotenv-expand');
 const dotenvShell = require('./index');
 
 describe('shell expansion', () => {
-    test('expand shell from dotenv ', () => {
+    beforeEach(() => {
+        process.env = {};
+    });
+    test('expand $(cmd) from dotenv.parse', () => {
         const buf = Buffer.from('BASIC=$(echo basic)');
         const config = dotenv.parse(buf);
-        dotenvShell(config);
-        expect(config).toEqual({ BASIC: 'basic' });
-        const buf1 = Buffer.from('BASIC=`echo basic`');
-        const config1 = dotenv.parse(buf1);
-        dotenvShell(config1);
-        expect(config1).toEqual({ BASIC: 'basic' });
+        expect(dotenvShell(config)).toEqual({ BASIC: 'basic' });
+        expect(process.env).toEqual({});
     });
-    test('no shell commands in dotenv', () => {
+    test('expand `cmd` from dotenv.parse', () => {
+        const buf = Buffer.from('BASIC=`echo basic`');
+        const config = dotenv.parse(buf);
+        expect(dotenvShell(config)).toEqual({ BASIC: 'basic' });
+        expect(process.env).toEqual({});
+    });
+    test('no shell commands in dotenv.parse', () => {
         const buf = Buffer.from('BASIC=basic');
         const config = dotenv.parse(buf);
-        dotenvShell(config);
-        expect(config).toEqual({ BASIC: 'basic' });
+        expect(dotenvShell(config)).toEqual({ BASIC: 'basic' });
+        expect(process.env).toEqual({});
     });
-    test('unsafe command', () => {
+    test('unsafe command in dotenv.parse', () => {
         const cmd = '$(rm .)';
-        const config = { UNSAFE: cmd };
+        const buf = Buffer.from(`UNSAFE=${cmd}`);
+        const config = dotenv.parse(buf);
         expect(() => dotenvShell(config)).toThrowError(
             new Error(`UNSAFE=${cmd} uses unsafe Linux command`),
         );
     });
-    test('dotenv-expand from file', () => {
+    test('dotenv-expand before shell expansion from file', () => {
         const config = dotenv.config({ path: '.env.test' });
-        dotenvExpand(config);
-        dotenvShell(config);
-        expect(config).toEqual({ parsed: { EXPAND: 'basic', BASIC: 'basic' } });
+        expect(dotenvShell(dotenvExpand(config))).toEqual({
+            parsed: { EXPAND: 'basic', BASIC: 'basic' },
+        });
+        expect(process.env).toEqual({ EXPAND: 'basic', BASIC: 'basic' });
+    });
+    test('dotenv-expand after shell expansion from file', () => {
+        const config = dotenv.config({ path: '.env.test' });
+        expect(dotenvShell(dotenvExpand(config))).toEqual({
+            parsed: { EXPAND: 'basic', BASIC: 'basic' },
+        });
+        expect(process.env).toEqual({ EXPAND: 'basic', BASIC: 'basic' });
     });
 });
