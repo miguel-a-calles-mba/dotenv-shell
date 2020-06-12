@@ -36,7 +36,9 @@ const shellExpand = (parsedConfig, loadEnv = false) => {
                     }
                 });
                 try {
-                    const newVal = execSync(cmd, { env: process.env }).toString().trim();
+                    const newVal = execSync(cmd, { env: process.env })
+                        .toString()
+                        .trim();
                     parsedConfig[key] = newVal;
                     if (loadEnv) {
                         process.env[key] = newVal;
