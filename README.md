@@ -1,5 +1,7 @@
 # dotenv-shell
 
+![Build Master](https://github.com/miguel-a-calles-mba/dotenv-shell/workflows/Build%20Master/badge.svg)
+
 A package that expands shell commands from a dotenv config.
 
 ## Install
