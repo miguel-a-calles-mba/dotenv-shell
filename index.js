@@ -16,15 +16,14 @@ const unsafeCmds = [
 
 module.exports = (dotenvConfig) => {
     if (dotenvConfig.parsed) {
-        shellExpand(dotenvConfig.parsed);
-        updateEnv(dotenvConfig.parsed);
+        shellExpand(dotenvConfig.parsed, true);
     } else {
         shellExpand(dotenvConfig);
     }
     return dotenvConfig;
 };
 
-const shellExpand = (parsedConfig) => {
+const shellExpand = (parsedConfig, loadEnv = false) => {
     Object.entries(parsedConfig).forEach(([key, val]) => {
         shellCmdPatterns.forEach((pattern) => {
             const [, cmd] = pattern.exec(val) || [];
@@ -37,18 +36,15 @@ const shellExpand = (parsedConfig) => {
                     }
                 });
                 try {
-                    const newVal = execSync(cmd).toString().trim();
+                    const newVal = execSync(cmd, { env: process.env }).toString().trim();
                     parsedConfig[key] = newVal;
+                    if (loadEnv) {
+                        process.env[key] = newVal;
+                    }
                 } catch (e) {
                     throw new Error(`Error for ${key}=${val}: ${e.message}`);
                 }
             }
         });
     });
-};
-
-const updateEnv = (parsedConfig) => {
-    Object.entries(parsedConfig).forEach(
-        ([key, val]) => (process.env[key] = val),
-    );
 };

@@ -34,18 +34,46 @@ describe('shell expansion', () => {
             new Error(`UNSAFE=${cmd} uses unsafe Linux command`),
         );
     });
-    test('dotenv-expand before shell expansion from file', () => {
+    test('shell expansion from file', () => {
         const config = dotenv.config({ path: '.env.test' });
-        expect(dotenvShell(dotenvExpand(config))).toEqual({
-            parsed: { EXPAND: 'basic', BASIC: 'basic' },
+        const output = {
+            BASIC: 'basic',
+            BASIC_ENV: 'basic',
+            EXPAND: 'expand',
+            EXPANDED: '${EXPAND}',
+            EXPANDED_ENV: 'expand',
+        };
+        expect(dotenvShell(config)).toEqual({
+            parsed: output,
         });
-        expect(process.env).toEqual({ EXPAND: 'basic', BASIC: 'basic' });
+        expect(process.env).toEqual(output);
     });
-    test('dotenv-expand after shell expansion from file', () => {
+    test('dotenv-expand => shell expansion from file', () => {
         const config = dotenv.config({ path: '.env.test' });
+        const output = {
+            BASIC: 'basic',
+            BASIC_ENV: 'basic',
+            EXPAND: 'expand',
+            EXPANDED: 'expand',
+            EXPANDED_ENV: 'expand',
+        };
         expect(dotenvShell(dotenvExpand(config))).toEqual({
-            parsed: { EXPAND: 'basic', BASIC: 'basic' },
+            parsed: output,
         });
-        expect(process.env).toEqual({ EXPAND: 'basic', BASIC: 'basic' });
+        expect(process.env).toEqual(output);
+    });
+    test('shell expansion from file => dotenv-expand', () => {
+        const config = dotenv.config({ path: '.env.test' });
+        const output = {
+            BASIC: 'basic',
+            BASIC_ENV: 'basic',
+            EXPAND: 'expand',
+            EXPANDED: 'expand',
+            EXPANDED_ENV: 'expand',
+        };
+        expect(dotenvShell(dotenvExpand(config))).toEqual({
+            parsed: output,
+        });
+        expect(process.env).toEqual(output);
     });
 });
