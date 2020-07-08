@@ -76,4 +76,17 @@ describe('shell expansion', () => {
         });
         expect(process.env).toEqual(output);
     });
+    describe('use previous variable value from file', () => {
+        test('from file', () => {
+            const config = dotenv.config({ path: '.env.test1' });
+            const output = {
+                VAR1: 'var1',
+                VAR1A: 'var1',
+            };
+            expect(dotenvShell(config)).toEqual({
+                parsed: output,
+            });
+            expect(process.env).toEqual(output);
+        });
+    });
 });
