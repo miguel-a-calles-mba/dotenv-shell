@@ -18,7 +18,7 @@ Wrap dotenv-shell around dotenv to expand shell commands.
 You `.env` file should look something like this:
 
 ```text
-BASIC=$(echo basic)
+BASIC=`echo basic`
 ```
 
 You script should look something like this:
@@ -42,7 +42,6 @@ npm install dotenv-expand
 
 ```text
 EXPAND=basic
-# The $(linuxCmd) substitution format will NOT work with dotenv-expand
 BASIC=`echo ${EXPAND}`
 ```
 
