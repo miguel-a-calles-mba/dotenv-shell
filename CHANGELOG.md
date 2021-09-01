@@ -1,5 +1,9 @@
 # Change log
 
+- v1.0.0
+  - Bump eslint from 7.19.0 to 7.32.0 #22
+  - Bump jest from 26.6.3 to 27.1.0 #24
+  - Bump dotenv from 8.2.0 to 10.0.0 #11
 - v0.1.3
   - Bump ws from 7.4.3 to 7.4.6 #10
 - v0.1.2
