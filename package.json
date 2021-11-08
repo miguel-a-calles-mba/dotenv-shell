@@ -28,7 +28,7 @@
   "devDependencies": {
     "dotenv": "^10.0.0",
     "dotenv-expand": "^5.1.0",
-    "eslint": "^7.19.0",
+    "eslint": "^8.2.0",
     "eslint-config-google": "^0.14.0",
     "jest": "^27.1.0",
     "rewire": "^5.0.0"
