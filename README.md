@@ -51,6 +51,16 @@ console.log(config);
 // { parsed: { EXPAND: 'basic', BASIC: 'basic' } }
 ```
 
+## Breaking change from dotenv
+
+Comments begin where a # exists, so if your value contains a # please wrap it in quotes. This is a breaking change from >= v15.0.0 and on.
+
+```text
+# This is a comment
+SECRET_KEY=YOURSECRETKEYGOESHERE # comment
+SECRET_HASH="something-with-a-#-hash"
+```
+
 ## Notes
 
 Please request features or report problems using the [issues](https://github.com/miguel-a-calles-mba/dotenv-shell/issues) page.
